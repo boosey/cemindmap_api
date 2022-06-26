@@ -1,0 +1,6 @@
+database:
+  username: cemindmapuser
+  password: cemindmappw
+  host: localhost
+  port: 5432 # change this value
+  databaseName: cemindmapdb
