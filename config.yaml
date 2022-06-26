@@ -4,5 +4,10 @@ database:
   host: localhost
   port: 5432 # change this value
   databaseName: cemindmapdb
+#
+# CREATE DATABASE cemindmapdb;
+# CREATE USER cemindmapuser WITH createdb;
+# ALTER USER cemindmapuser WITH password 'cemindmappw';
+# GRANT all ON database cemindmapdb TO cemindmapuser;
 # conduit db generate
 # conduit db upgrade --connect postgres://cemindmapuser:cemindmappw@localhost:5432/cemindmapdb

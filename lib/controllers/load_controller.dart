@@ -1,5 +1,4 @@
 import 'package:cemindmap_api/cemindmap_api.dart';
-import 'package:cemindmap_api/model/opportunity.dart';
 import 'package:cemindmap_api/processISCJson.dart';
 
 import '../model/project.dart';
@@ -25,10 +24,6 @@ class LoadController extends Controller {
       final pq = Query<Project>(context);
       pq.canModifyAllInstances = true;
       await pq.delete();
-
-      final oq = Query<Opportunity>(context);
-      oq.canModifyAllInstances = true;
-      await oq.delete();
 
       return Response.ok('Deleted All Records');
     }
