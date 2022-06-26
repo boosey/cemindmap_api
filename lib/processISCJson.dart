@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
+import 'package:cemindmap_api/model/opportunity.dart';
 import 'package:conduit/conduit.dart';
 
 import 'model/project.dart';
@@ -64,20 +64,11 @@ Future<void> processProjectsFile({
   await processFile(
       file: file,
       process: (r) async {
-        try {
-          final Project p = Project.fromJsonDataCells(r);
-          log(p.toString());
-          await Query<Project>(context, values: p).insert();
-        } on Exception catch (e) {
-          log(e.toString());
-          rethrow;
-        }
+        final Project p = Project.fromJsonDataCells(r);
+        await Query<Project>(context, values: p).insert();
 
-        // await processEntity(p.id, p.toJson());
-
-        //   Opportunity o = Opportunity.fromJsonDataCells(r);
-        //   await processEntity(
-        //       o.opportunityid, o.toJson(), opportunityCollectionId);
+        final Opportunity o = Opportunity.fromJsonDataCells(r);
+        await Query<Opportunity>(context, values: o).insert();
 
         //   Talent t = Talent.fromJsonDataCells(r);
         //   await processEntity(t.talentid, t.toJson(), talentCollectionId);

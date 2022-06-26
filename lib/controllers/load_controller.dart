@@ -1,4 +1,5 @@
 import 'package:cemindmap_api/cemindmap_api.dart';
+import 'package:cemindmap_api/model/opportunity.dart';
 import 'package:cemindmap_api/processISCJson.dart';
 
 import '../model/project.dart';
@@ -21,11 +22,15 @@ class LoadController extends Controller {
       return Response.ok('Loaded $loadType');
     }
     if (loadType == "deleteall") {
-      final q = Query<Project>(context);
-      q.canModifyAllInstances = true;
-      final count = await q.delete();
+      final pq = Query<Project>(context);
+      pq.canModifyAllInstances = true;
+      await pq.delete();
 
-      return Response.ok('$count');
+      final oq = Query<Opportunity>(context);
+      oq.canModifyAllInstances = true;
+      await oq.delete();
+
+      return Response.ok('Deleted All Records');
     }
 
     throw Response.notFound();

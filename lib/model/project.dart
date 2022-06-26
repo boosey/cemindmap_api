@@ -11,13 +11,6 @@ const startDateIdx = 5;
 const endDateIdx = 6;
 const leaderIdIdx = 7;
 const ownerIdIdx = 8;
-const amountIdIdx = 9;
-const closeDateIdIdx = 10;
-const isOpportunityClosedIdx = 11;
-const isOpportunityWonIdx = 12;
-const opportunityStageIdx = 13;
-const opportunityFiscalPeriodIdx = 14;
-const opportunityFiscalYearIdx = 15;
 const marketCodeIdx = 16;
 const parentAccountCodeIdx = 17;
 const geoNameIdx = 18;
@@ -42,24 +35,7 @@ class Project extends ManagedObject<_Project> implements _Project {
     startDate = DateTime.parse(dataCells[startDateIdx][value] as String);
     endDate = DateTime.parse(dataCells[endDateIdx][value] as String);
     projectLeaderId = dataCells[leaderIdIdx][value] as String;
-    opportunityOwnerId = dataCells[leaderIdIdx][value] as String;
-
-    final amountString = dataCells[amountIdIdx][label] as String;
-    if (amountString.contains(".00")) {
-      amount = (dataCells[amountIdIdx][value][amountKey] as int).toDouble();
-    }
-    if (amountString.contains(".") && !amountString.contains(".00")) {
-      amount = dataCells[amountIdIdx][value][amountKey] as double;
-    }
-
-    closeDate = DateTime.parse(dataCells[closeDateIdIdx][value] as String);
-    isOpportunityClosed = dataCells[isOpportunityClosedIdx][value] as bool;
-    isOpportunityWon = dataCells[isOpportunityWonIdx][value] as bool;
-    opportunityStage = dataCells[opportunityStageIdx][value] as String;
-    opportunityFiscalPeriod =
-        dataCells[opportunityFiscalPeriodIdx][value] as String;
-    opportunityFiscalYear =
-        (dataCells[opportunityFiscalYearIdx][value] as int).toString();
+    opportunityOwnerId = dataCells[ownerIdIdx][value] as String;
     marketCode = dataCells[marketCodeIdx][value] as String;
     parentAccountCode = dataCells[parentAccountCodeIdx][value] as String;
     geo = dataCells[geoNameIdx][label] as String;
@@ -89,13 +65,6 @@ class _Project {
   late DateTime endDate;
   late String projectLeaderId;
   late String opportunityOwnerId;
-  late double amount;
-  late DateTime closeDate;
-  late bool isOpportunityClosed;
-  late bool isOpportunityWon;
-  late String opportunityStage;
-  late String opportunityFiscalPeriod;
-  late String opportunityFiscalYear;
   late String marketCode;
   late String parentAccountCode;
   late String geo;
