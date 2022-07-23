@@ -1,5 +1,7 @@
 import 'package:cemindmap_api/cemindmap_api.dart';
 import 'package:cemindmap_api/controllers/load_controller.dart';
+// ignore: unused_import
+import 'package:cemindmap_api/model/assignment.dart';
 import 'package:cemindmap_api/model/project.dart';
 
 /// This type initializes an application.
@@ -35,8 +37,12 @@ class CemindmapApiChannel extends ApplicationChannel {
     final router = Router();
 
     router
-        .route("/project/[:id]")
+        .route("/rawProjects/[:id]")
         .link(() => ManagedObjectController<Project>(context));
+
+    router
+        .route("/rawAssignments/[:id]")
+        .link(() => ManagedObjectController<Assignment>(context));
 
     router
         .route('/load/:loadtype(projects|assignments|deleteall)')

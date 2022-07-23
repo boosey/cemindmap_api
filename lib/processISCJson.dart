@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:cemindmap_api/model/assignment.dart';
 import 'package:conduit/conduit.dart';
 
 import 'model/project.dart';
@@ -20,15 +22,15 @@ Future<void> process({
     );
   }
 
-  // if (assignmentFilePath.isNotEmpty) {
-  //   var fileId = await uploadFile(
-  //     path: assignmentFilePath,
-  //   );
+  if (assignmentFilePath.isNotEmpty) {
+    final file = File(assignmentFilePath);
+    // print(await file.readAsString(encoding: ascii));
 
-  //   await processAssignmentsFile(
-  //     fileId: fileId,
-  //   );
-  // }
+    await processAssignmentsFile(
+      context: context,
+      file: file,
+    );
+  }
 }
 
 Future<List<dynamic>> rowsFromFile({required File file}) async {
@@ -63,25 +65,27 @@ Future<void> processProjectsFile({
   await processFile(
       file: file,
       process: (r) async {
-        final Project p = Project.fromJsonDataCells(r);
-        await Query<Project>(context, values: p).insert();
+        try {
+          final Project p = Project.fromJsonDataCells(r);
+          await Query<Project>(context, values: p).insert();
+        } catch (e) {
+          log("Error loading: ${e.toString()}");
+        }
+      });
+}
 
-        // final Opportunity o = Opportunity.fromJsonDataCells(r);
-        // await Query<Opportunity>(context, values: o).insert();
-
-        //   Talent t = Talent.fromJsonDataCells(r);
-        //   await processEntity(t.talentid, t.toJson(), talentCollectionId);
-
-        //   cea.Account a = cea.Account.fromJsonDataCells(r);
-        //   await processEntity(a.accountid, a.toJson(), accountsCollectionId);
-
-        //   Geo g = Geo.fromJsonDataCells(r);
-        //   await processEntity(g.geoname, g.toJson(), geoCollectionId);
-
-        //   Market m = Market.fromJsonDataCells(r);
-        //   await processEntity(m.marketname, m.toJson(), marketCollectionId);
-
-        //   Squad s = Squad.fromJsonDataCells(r);
-        //   await processEntity(s.squadname, s.toJson(), squadCollectionId);
+Future<void> processAssignmentsFile({
+  required ManagedContext context,
+  required File file,
+}) async {
+  await processFile(
+      file: file,
+      process: (r) async {
+        try {
+          final Assignment a = Assignment.fromJsonDataCells(r);
+          await Query<Assignment>(context, values: a).insert();
+        } catch (e) {
+          log("Error loading: ${e.toString()}");
+        }
       });
 }
